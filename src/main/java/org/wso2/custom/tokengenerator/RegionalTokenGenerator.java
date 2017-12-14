@@ -37,18 +37,14 @@ public class RegionalTokenGenerator extends OauthTokenIssuerImpl {
 
     @Override
     public String accessToken(OAuthTokenReqMessageContext tokReqMsgCtx) throws OAuthSystemException {
-
         //generate the accesstoken
-        String accessToken = super.accessToken(tokReqMsgCtx);
-        return issueAccessToken(accessToken);
+        return issueAccessToken(super.accessToken(tokReqMsgCtx));
     }
 
     @Override
     public String accessToken(OAuthAuthzReqMessageContext oauthAuthzMsgCtx) throws OAuthSystemException {
-
         //generate the accesstoken
-        String accessToken = super.accessToken(oauthAuthzMsgCtx);
-        return issueAccessToken(accessToken);
+        return issueAccessToken(super.accessToken(oauthAuthzMsgCtx));
     }
 
     /**
