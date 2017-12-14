@@ -33,30 +33,37 @@ public class RegionalTokenGenerator extends OauthTokenIssuerImpl {
 
     private static final Log log = LogFactory.getLog(RegionalTokenGenerator.class);
     private static final String REGION = "region";
+    private static final String DELIMITER = "-";
 
     @Override
     public String accessToken(OAuthTokenReqMessageContext tokReqMsgCtx) throws OAuthSystemException {
 
-        //Reading the region value from the property "region"
-        String region = System.getProperty(REGION);
         //generate the accesstoken
         String accessToken = super.accessToken(tokReqMsgCtx);
-        //check if region is null or not and append region- to access token
-        if (region != null) {
-            accessToken = region + "-" + accessToken;
-        }
-        return accessToken;
+        return issueAccessToken(accessToken);
     }
 
     @Override
     public String accessToken(OAuthAuthzReqMessageContext oauthAuthzMsgCtx) throws OAuthSystemException {
-        //Reading the region value from the property "region"
-        String region = System.getProperty(REGION);
+
         //generate the accesstoken
         String accessToken = super.accessToken(oauthAuthzMsgCtx);
+        return issueAccessToken(accessToken);
+    }
+
+    /**
+     * This method will get the access token as input and append the region as a prefix if it is available.
+     *
+     * @param accessToken generated default access token calling super method
+     * @return String accessToken as a string
+     */
+    private String issueAccessToken(String accessToken) {
+        //Reading the region value from the property "region"
+        String region = System.getProperty(REGION);
         //check if region is null or not and append region- to access token
         if (region != null) {
-            accessToken = region + "-" + accessToken;
+            log.debug("Region: " + region);
+            accessToken = region + DELIMITER + accessToken;
         }
         return accessToken;
     }
