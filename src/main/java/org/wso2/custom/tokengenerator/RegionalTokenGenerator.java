@@ -21,6 +21,7 @@ package org.wso2.custom.tokengenerator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
+import org.wso2.carbon.identity.oauth2.authz.OAuthAuthzReqMessageContext;
 import org.wso2.carbon.identity.oauth2.token.OAuthTokenReqMessageContext;
 import org.wso2.carbon.identity.oauth2.token.OauthTokenIssuerImpl;
 
@@ -33,14 +34,28 @@ public class RegionalTokenGenerator extends OauthTokenIssuerImpl {
     private static final Log log = LogFactory.getLog(RegionalTokenGenerator.class);
     private static final String REGION = "region";
 
-    @Override public String accessToken(OAuthTokenReqMessageContext tokReqMsgCtx) throws OAuthSystemException {
+    @Override
+    public String accessToken(OAuthTokenReqMessageContext tokReqMsgCtx) throws OAuthSystemException {
 
         //Reading the region value from the property "region"
         String region = System.getProperty(REGION);
         //generate the accesstoken
         String accessToken = super.accessToken(tokReqMsgCtx);
         //check if region is null or not and append region- to access token
-        if (region != null || !region.equals("")) {
+        if (region != null) {
+            accessToken = region + "-" + accessToken;
+        }
+        return accessToken;
+    }
+
+    @Override
+    public String accessToken(OAuthAuthzReqMessageContext oauthAuthzMsgCtx) throws OAuthSystemException {
+        //Reading the region value from the property "region"
+        String region = System.getProperty(REGION);
+        //generate the accesstoken
+        String accessToken = super.accessToken(oauthAuthzMsgCtx);
+        //check if region is null or not and append region- to access token
+        if (region != null) {
             accessToken = region + "-" + accessToken;
         }
         return accessToken;
