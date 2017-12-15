@@ -26,8 +26,10 @@ import org.wso2.carbon.identity.oauth2.token.OAuthTokenReqMessageContext;
 import org.wso2.carbon.identity.oauth2.token.OauthTokenIssuerImpl;
 
 /**
- * This class contains the extension point to append region for the access token
- * Region should be taken form a system variable
+ *
+ * This class contains the extension point to append region for the access token.
+ * Region should be taken form a system variable.
+ *
  */
 public class RegionalTokenGenerator extends OauthTokenIssuerImpl {
 
@@ -45,6 +47,16 @@ public class RegionalTokenGenerator extends OauthTokenIssuerImpl {
     public String accessToken(OAuthAuthzReqMessageContext oauthAuthzMsgCtx) throws OAuthSystemException {
         //generate the accesstoken
         return issueAccessToken(super.accessToken(oauthAuthzMsgCtx));
+    }
+
+    @Override public String refreshToken(OAuthTokenReqMessageContext tokReqMsgCtx) throws OAuthSystemException {
+        //generate refresh token
+        return issueAccessToken(super.refreshToken(tokReqMsgCtx));
+    }
+
+    @Override public String refreshToken(OAuthAuthzReqMessageContext oauthAuthzMsgCtx) throws OAuthSystemException {
+        //generate refresh token
+        return issueAccessToken(super.refreshToken(oauthAuthzMsgCtx));
     }
 
     /**
