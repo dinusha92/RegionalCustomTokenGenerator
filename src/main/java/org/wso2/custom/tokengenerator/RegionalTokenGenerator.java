@@ -38,7 +38,8 @@ public class RegionalTokenGenerator extends OauthTokenIssuerImpl {
     private static final String DELIMITER = "-";
 
     @Override
-    public String accessToken(OAuthTokenReqMessageContext tokReqMsgCtx) throws OAuthSystemException {
+    public
+    String accessToken(OAuthTokenReqMessageContext tokReqMsgCtx) throws OAuthSystemException {
         //generate the accesstoken
         return issueAccessToken(super.accessToken(tokReqMsgCtx));
     }
@@ -49,12 +50,14 @@ public class RegionalTokenGenerator extends OauthTokenIssuerImpl {
         return issueAccessToken(super.accessToken(oauthAuthzMsgCtx));
     }
 
-    @Override public String refreshToken(OAuthTokenReqMessageContext tokReqMsgCtx) throws OAuthSystemException {
+    @Override
+    public String refreshToken(OAuthTokenReqMessageContext tokReqMsgCtx) throws OAuthSystemException {
         //generate refresh token
         return issueAccessToken(super.refreshToken(tokReqMsgCtx));
     }
 
-    @Override public String refreshToken(OAuthAuthzReqMessageContext oauthAuthzMsgCtx) throws OAuthSystemException {
+    @Override
+    public String refreshToken(OAuthAuthzReqMessageContext oauthAuthzMsgCtx) throws OAuthSystemException {
         //generate refresh token
         return issueAccessToken(super.refreshToken(oauthAuthzMsgCtx));
     }
